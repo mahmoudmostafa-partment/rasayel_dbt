@@ -9,10 +9,10 @@ Pipeline stages:
 
 Key Files & Locations
 ---------------------
-- Project configuration: [`rasayel_dbt/dbt_project.yml`](rasayel_dbt/dbt_project.yml)  
-- Schema naming utility macro: [`rasayel_dbt/macros/generate_schema_name.sql`](rasayel_dbt/macros/generate_schema_name.sql) (macro: `generate_schema_name`) 
-- Models (staging/intermediate/marts): [`rasayel_dbt/models/`](rasayel_dbt/models/)  
-- Compiled artifacts & docs: [`rasayel_dbt/target/index.html`](rasayel_dbt/target/index.html) and files under [`rasayel_dbt/target/`](rasayel_dbt/target/)  
+- Project configuration: [`rasayel_dbt/dbt_project.yml`](dbt_project.yml)  
+- Schema naming utility macro: [`rasayel_dbt/macros/generate_schema_name.sql`](macros/generate_schema_name.sql) (macro: `generate_schema_name`) 
+- Models (staging/intermediate/marts): [`rasayel_dbt/models/`](models/)  
+- Compiled artifacts & docs: [`rasayel_dbt/target/index.html`](target/index.html) and files under [`rasayel_dbt/target/`](target/)  
 - Local dbt profile (not in repo): [`c:\Users\<YOUR-USERNAME>\.dbt\profiles.yml`]
 
 Audience
