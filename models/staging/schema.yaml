@@ -1,0 +1,191 @@
+version: 2
+
+models:
+  - name: stg_appUsers
+    description: "Staging table for app users, cleaned and normalized from raw_appUsers"
+    columns:
+      - name: id
+        description: "Primary key of the user"
+        tests:
+          - not_null
+          - unique
+      - name: email
+        description: "User email address"
+        tests:
+          - not_null
+      - name: role
+        description: "Role assigned to the user"
+        tests:
+          - not_null
+      - name: full_name
+        description: "Full name of the user"
+      - name: status
+        description: "User account status"
+      - name: created_at
+        description: "Creation timestamp"
+        tests:
+          - not_null
+      - name: updated_at
+        description: "Last update timestamp"
+      - name: in_active_team
+        description: "Indicates if the user is in an inactive team"
+
+  - name: stg_botUsers
+    description: "Staging table for bot users, cleaned and normalized from raw_botUsers"
+    columns:
+      - name: id
+        description: "Primary key of the bot user"
+        tests:
+          - not_null
+          - unique
+      - name: display_name
+        description: "Display name of the bot user"
+        tests:
+          - not_null
+      - name: created_at
+        description: "Creation timestamp"
+        tests:
+          - not_null
+      - name: updated_at
+        description: "Last update timestamp"
+
+  - name: stg_channelUsers
+    description: "Staging table for contacts/customers from raw_channelUsers"
+    columns:
+      - name: id
+        description: "Primary key of the contact"
+        tests:
+          - not_null
+          - unique
+      - name: name
+        description: "Contact name"
+        tests:
+          - not_null
+      - name: blocked
+        description: "Indicates if the contact is blocked"
+      - name: channels
+        description: "JSON containing channels the contact belongs to"
+      - name: created_at
+        description: "Creation timestamp"
+        tests:
+          - not_null
+      - name: updated_at
+        description: "Last update timestamp"
+      - name: identifiers
+        description: "JSON of contact identifiers"
+
+  - name: stg_channels
+    description: "Staging table for channels from raw_channels"
+    columns:
+      - name: id
+        description: "Primary key of the channel"
+        tests:
+          - not_null
+          - unique
+      - name: created_at
+        description: "Creation timestamp"
+        tests:
+          - not_null
+      - name: updated_at
+        description: "Last update timestamp"
+      - name: channel_type
+        description: "Type of the channel"
+      - name: display_name
+        description: "Display name of the channel"
+
+  - name: stg_conversations
+    description: "Staging table for conversations from raw_conversations"
+    columns:
+      - name: id
+        description: "Primary key of the conversation"
+        tests:
+          - not_null
+          - unique
+      - name: state
+        description: "State of the conversation"
+      - name: channel_id
+        description: "Linked channel ID"
+      - name: contact_id
+        description: "Linked contact ID"
+      - name: created_at
+        description: "Creation timestamp"
+        tests:
+          - not_null
+      - name: updated_at
+        description: "Last update timestamp"
+      - name: assignee_id
+        description: "ID of assigned agent"
+      - name: last_closed_at
+        description: "Last closed timestamp"
+      - name: terminated_at
+        description: "Termination timestamp"
+      - name: messages_count
+        description: "Number of messages in the conversation"
+      - name: last_interaction_at
+        description: "Last interaction timestamp"
+      - name: last_inbound_message_at
+        description: "Last inbound message timestamp"   
+  - name: stg_messages
+    description: "Staging table for messages from raw_messages"
+    columns:
+      - name: id
+        description: "Primary key of the message"
+        tests:
+          - not_null
+          - unique
+      - name: body
+        description: "Message content"
+      - name: user
+        description: "JSON containing user info"
+      - name: read_at
+        description: "Timestamp when message was read"
+      - name: sent_at
+        description: "Timestamp when message was sent"
+      - name: assignee
+        description: "JSON containing assignee info"
+      - name: assigner
+        description: "JSON containing assigner info"
+      - name: created_at
+        description: "Creation timestamp"
+        tests:
+          - not_null
+      - name: direction
+        description: "Message direction (inbound/outbound)"
+      - name: updated_at
+        description: "Last update timestamp"
+      - name: typename
+        description: "GraphQL typename"
+      - name: components
+        description: "JSON array of message components"
+      - name: delivered_at
+        description: "Timestamp when message was delivered"
+      - name: message_type
+        description: "Type of the message"
+      - name: conversation_id
+        description: "Linked conversation ID"
+      - name: message_subtype
+        description: "Subtype of the message"
+      - name: message_category
+        description: "Category of the message" 
+  - name: stg_teams
+    description: "Staging table for teams from raw_teams"
+    columns:
+      - name: id
+        description: "Primary key of the team"
+        tests:
+          - not_null
+          - unique
+      - name: name
+        description: "Name of the team"
+        tests:
+          - not_null
+      - name: default
+        description: "Indicates if the team is default"
+      - name: created_at
+        description: "Creation timestamp"
+        tests:
+          - not_null
+      - name: updated_at
+        description: "Last update timestamp"
+      - name: memberships
+        description: "JSON array of team memberships"                  

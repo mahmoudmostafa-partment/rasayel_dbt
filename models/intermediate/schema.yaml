@@ -1,0 +1,168 @@
+version: 2
+
+models:
+
+  # ----------------------------
+  # int_contacts
+  # ----------------------------
+  - name: int_contacts
+    description: "Flattened, cleaned contacts"
+    columns:
+      - name: id
+        description: "Primary key of the contact"
+        tests:
+          - not_null
+          - unique
+      - name: name
+        description: "Resolved contact name"
+        tests:
+          - not_null
+      - name: blocked
+        description: "Indicates if the contact is blocked"
+      - name: created_at
+        description: "Contact creation timestamp"
+        tests:
+          - not_null
+      - name: updated_at
+        description: "Last update timestamp"
+
+  # ----------------------------
+  # int_contact_identifiers
+  # ----------------------------
+  - name: int_contact_identifiers
+    description: "One-to-many identifiers extracted from contacts"
+    columns:
+      - name: contact_id
+        description: "FK → int_contacts.id"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_contacts')
+              field: id
+      - name: category
+        description: "Identifier type"
+        tests:
+          - not_null
+      - name: source_id
+        description: "Raw identifier value"
+        tests:
+          - not_null
+
+  # ----------------------------
+  # int_contact_channels
+  # ----------------------------
+  - name: int_contact_channels
+    description: "One-to-many relation between contacts and channels"
+    columns:
+      - name: contact_id
+        description: "FK → int_contacts.id"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_contacts')
+              field: id
+      - name: channel_id
+        description: "Channel identifier"
+        tests:
+          - not_null
+          # point to stg_channels because int_channels does NOT exist
+          - relationships:
+              to: ref('stg_channels')
+              field: id
+
+  # ----------------------------
+  # int_messages
+  # ----------------------------
+  - name: int_messages
+    description: "Cleaned intermediate messages with flattened body, sender, assignee, assigner and metadata"
+    columns:
+      - name: id
+        description: "Primary key of the message"
+        tests:
+          - not_null
+          - unique
+
+      - name: message_body
+        description: "Unified message text: body or components (components joined with newlines)"
+
+      - name: sender_user_id
+        description: "ID of the message sender (extracted from user JSON)"
+
+      - name: sender_user_type
+        description: "Type of the message sender (user->__typename)"
+
+      - name: assignee_id
+        description: "ID of the assignee (extracted from assignee JSON)"
+
+      - name: assigner_id
+        description: "ID of the assigner (extracted from assigner JSON)"
+
+      - name: assigner_type
+        description: "Type of the assigner (assigner->__typename)"
+
+      - name: created_at
+        description: "Message creation timestamp"
+        tests:
+          - not_null
+
+      - name: updated_at
+        description: "Message last updated timestamp"
+
+      - name: read_at
+        description: "Timestamp when message was read"
+
+      - name: sent_at
+        description: "Timestamp when message was sent"
+
+      - name: delivered_at
+        description: "Timestamp when message was delivered"
+
+      - name: direction
+        description: "Message direction (INBOUND / OUTBOUND / NO_DIRECTION)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["INBOUND", "OUTBOUND", "NO_DIRECTION"]        
+
+      - name: type
+        description: "Original __typename value from staging (renamed to type in the model)"
+      
+      - name: conversation_id
+        description: "Linked conversation id (from stg_conversations)"
+        tests:
+          - relationships:
+              to: ref('stg_conversations')
+              field: id
+
+      - name: message_type
+        description: "Message category from raw field (messageType)"
+
+      - name: message_subtype
+        description: "Message subtype"
+
+      - name: message_category
+        description: "Message category"
+  # ----------------------------
+  # int_team_memberships
+  # ----------------------------
+  - name: int_team_memberships
+    description: "One row per user-to-team membership"
+    columns:
+      - name: team_id
+        description: "FK → stg_teams.id"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_teams')
+              field: id
+      - name: app_user_id
+        description: "FK → stg_appUsers.id"
+        tests:
+          - not_null
+      - name: membership_id
+        description: "Unique membership id from Rasayel"
+        tests:
+          - not_null
+          - unique
+      - name: is_primary
+        description: "Is this the user's primary team?"

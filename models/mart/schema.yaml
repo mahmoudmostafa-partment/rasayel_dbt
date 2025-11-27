@@ -1,0 +1,219 @@
+version: 2
+
+models:
+  - name: contacts
+    description: "Final table of contacts/customers"
+    columns:
+      - name: id
+        description: "Primary key of the contact"
+        tests:
+          - not_null
+          - unique
+      - name: name
+        description: "Resolved contact name"
+        tests:
+          - not_null
+      - name: blocked
+        description: "Indicates if the contact is blocked"
+      - name: created_at
+        description: "Creation timestamp"
+        tests:
+          - not_null
+      - name: updated_at
+        description: "Last update timestamp"
+
+  - name: contact_identifiers
+    description: "Identifiers linked to contacts"
+    columns:
+      - name: contact_id
+        description: "Foreign key to contacts.id"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('contacts')
+              field: id
+      - name: category
+        description: "Identifier category (PHONE, EMAIL, FACEBOOK_ID, etc.)"
+        tests:
+          - not_null
+      - name: source_id
+        description: "Identifier value"
+        tests:
+          - not_null
+
+  - name: contact_channels
+    description: "Contact-to-channel mapping"
+    columns:
+      - name: contact_id
+        description: "Foreign key to contacts.id"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('contacts')
+              field: id
+      - name: channel_id
+        description: "Linked channel ID"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('channels')
+              field: id
+
+  - name: messages
+    description: "Final messages table"
+    columns:
+      - name: id
+        description: "Message ID"
+        tests:
+          - not_null
+          - unique
+      - name: message_body
+        description: "Unified message body text"
+        tests:
+          - not_null
+      - name: sender_user_id
+        description: "ID of sender user"
+        tests:
+          - not_null
+      - name: sender_user_type
+        description: "Type of sender user (AppUser, BotUser, etc.)"
+      - name: assignee_id
+        description: "ID of assignee user"
+        tests:
+          - relationships:
+              to: ref('appUsers')
+              field: id
+      - name: assigner_id
+        description: "ID of assigner user"
+      - name: assigner_type
+        description: "Type of assigner"
+      - name: created_at
+        description: "Creation timestamp"
+        tests:
+          - not_null
+      - name: updated_at
+        description: "Last update timestamp"
+      - name: read_at
+        description: "Read timestamp"
+      - name: sent_at
+        description: "Sent timestamp"
+      - name: delivered_at
+        description: "Delivered timestamp"
+      - name: direction
+        description: "Message direction"
+        tests:
+          - accepted_values:
+              values: ['INBOUND', 'OUTBOUND', 'NO_DIRECTION']
+      - name: type
+        description: "Message type column (renamed from typename)"
+      - name: conversation_id
+        description: "Foreign key to conversations.id"
+        tests:
+          - relationships:
+              to: ref('conversations')
+              field: id
+      - name: message_type
+        description: "Original messageType"
+      - name: message_subtype
+        description: "Original messageSubtype"
+      - name: message_category
+        description: "Original messageCategory"
+
+  - name: channels
+    description: "Final channels table"
+    columns:
+      - name: id
+        description: "Primary key of channel"
+        tests:
+          - not_null
+          - unique
+      - name: display_name
+        description: "Channel display name"
+      - name: created_at
+        description: "Creation timestamp"
+      - name: updated_at
+        description: "Last update timestamp"
+      - name: channel_type
+        description: "Type of channel"
+
+  - name: appUsers
+    description: "Final appUsers table"
+    columns:
+      - name: id
+        description: "Primary key of user"
+        tests:
+          - not_null
+          - unique
+      - name: role
+        description: "User role"
+      - name: email
+        description: "Email address"
+      - name: status
+        description: "Account status"
+      - name: full_name
+        description: "Full name of user"
+      - name: created_at
+        description: "Creation timestamp"
+      - name: updated_at
+        description: "Last update timestamp"
+      - name: in_active_team
+        description: "Boolean flag for active team membership"
+
+  - name: botUsers
+    description: "Final bot users table"
+    columns:
+      - name: id
+        description: "Primary key of bot user"
+        tests:
+          - not_null
+          - unique
+      - name: display_name
+        description: "Bot display name"
+      - name: created_at
+        description: "Creation timestamp"
+      - name: updated_at
+        description: "Last update timestamp"
+
+  - name: teams
+    description: "Final teams table"
+    columns:
+      - name: id
+        description: "Primary key of team"
+        tests:
+          - not_null
+          - unique
+      - name: name
+        description: "Team name"
+        tests:
+          - not_null
+      - name: default
+        description: "Default flag for team"
+      - name: created_at
+        description: "Creation timestamp"
+      - name: updated_at
+        description: "Last update timestamp"
+
+  - name: team_memberships
+    description: "Mapping between appUsers and teams"
+    columns:
+      - name: membership_id
+        description: "Primary key of membership"
+        tests:
+          - not_null
+          - unique
+      - name: team_id
+        description: "Foreign key to teams.id"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('teams')
+              field: id
+      - name: app_user_id
+        description: "Foreign key to appUsers.id"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('appUsers')
+              field: id
+      - name: primary
+        description: "Indicates primary membership"

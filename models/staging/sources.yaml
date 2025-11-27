@@ -1,0 +1,272 @@
+version: 2
+
+sources:
+  - name: raw_rasayel_data
+    schema: raw_rasayel_data
+    tables:
+      - name: raw_appUsers
+        description: "Raw application users table from Rasayel"
+        columns:
+          - name: id
+            description: "Primary key of the user"
+            tests:
+              - not_null
+              - unique
+          - name: role
+            description: "Role assigned to the user"
+          - name: email
+            description: "User email address"
+          - name: status
+            description: "User account status"
+          - name: fullName
+            description: "Full name of the user"
+          - name: createdAt
+            description: "Creation timestamp (numeric) in unix format"
+          - name: updatedAt
+            description: "Last update timestamp (numeric) in unix format"
+          - name: inActiveTeam
+            description: "Indicates if the user is in an inactive team"
+          - name: _airbyte_raw_id
+            description: "Airbyte raw record ID"
+            tests:
+              - not_null
+          - name: _airbyte_extracted_at
+            description: "Airbyte extraction timestamp"
+            tests:
+              - not_null
+          - name: _airbyte_generation_id
+            description: "Airbyte generation ID"
+          - name: _airbyte_meta
+            description: "Airbyte metadata JSON that includes sync id and changes"
+            tests:
+              - not_null
+
+      - name: raw_botUsers
+        description: "Raw bot users table from Rasayel"
+        columns:
+          - name: id
+            description: "Primary key of the bot user"
+            tests:
+              - not_null
+              - unique
+          - name: createdAt
+            description: "Creation timestamp (numeric) in unix format"
+          - name: updatedAt
+            description: "Last update timestamp (numeric) in unix format"
+          - name: displayName
+            description: "Display name of the bot"
+          - name: _airbyte_raw_id
+            description: "Airbyte raw record ID"
+            tests:
+              - not_null
+          - name: _airbyte_extracted_at
+            description: "Airbyte extraction timestamp"
+            tests:
+              - not_null
+          - name: _airbyte_generation_id
+            description: "Airbyte generation ID"
+          - name: _airbyte_meta
+            description: "Airbyte metadata JSON that includes sync id and changes"
+            tests:
+              - not_null
+
+      - name: raw_channelUsers
+        description: "Raw mapping of channel users (customers/contacts) from Rasayel"
+        columns:
+          - name: id
+            description: "Primary key of channel user mapping"
+            tests:
+              - not_null
+              - unique
+          - name: name
+            description: "User name"
+          - name: blocked
+            description: "Whether the user is blocked in the channel"
+          - name: channels
+            description: "JSON containing channels the user belongs to"
+          - name: createdAt
+            description: "Creation timestamp (numeric) in unix format"
+          - name: updatedAt
+            description: "Last update timestamp (numeric) in unix format"
+          - name: displayName
+            description: "User display name"
+          - name: identifiers
+            description: "JSON of user identifiers which can include phone numbers, emails, etc."
+          - name: _airbyte_raw_id
+            description: "Airbyte raw record ID"
+            tests:
+              - not_null
+          - name: _airbyte_extracted_at
+            description: "Airbyte extraction timestamp"
+            tests:
+              - not_null
+          - name: _airbyte_generation_id
+            description: "Airbyte generation ID"
+          - name: _airbyte_meta
+            description: "Airbyte metadata JSON that includes sync id and changes"
+            tests:
+              - not_null
+
+      - name: raw_channels
+        description: "Raw channels table from Rasayel"
+        columns:
+          - name: id
+            description: "Primary key of the channel"
+            tests:
+              - not_null
+              - unique
+          - name: createdAt
+            description: "Creation timestamp (numeric) in unix format"
+          - name: updatedAt
+            description: "Last update timestamp (numeric) in unix format"
+          - name: channelType
+            description: "Type of the channel"
+          - name: displayName
+            description: "Display name of the channel"
+          - name: _airbyte_raw_id
+            description: "Airbyte raw record ID"
+            tests:
+              - not_null
+          - name: _airbyte_extracted_at
+            description: "Airbyte extraction timestamp"
+            tests:
+              - not_null
+          - name: _airbyte_generation_id
+            description: "Airbyte generation ID"
+          - name: _airbyte_meta
+            description: "Airbyte metadata JSON that includes sync id and changes"
+            tests:
+              - not_null
+
+      - name: raw_conversations
+        description: "Raw conversations table from Rasayel"
+        columns:
+          - name: id
+            description: "Primary key of the conversation"
+            tests:
+              - not_null
+              - unique
+          - name: state
+            description: "State of the conversation"
+          - name: channelId
+            description: "Channel ID linked to this conversation"
+          - name: contactId
+            description: "Contact ID linked to this conversation"
+          - name: createdAt
+            description: "Creation timestamp (numeric) in unix format"
+          - name: updatedAt
+            description: "Last update timestamp (numeric) in unix format"
+          - name: assigneeId
+            description: "ID of assigned agent"
+          - name: lastClosedAt
+            description: "Last closed timestamp (numeric) in unix format"
+          - name: terminatedAt
+            description: "Termination timestamp (numeric) in unix format"
+          - name: messagesCount
+            description: "Number of messages in the conversation"
+          - name: lastInteractionAt
+            description: "Last interaction timestamp (numeric) in unix format"
+          - name: lastInboundMessageAt
+            description: "Last inbound message timestamp (numeric) in unix format"
+          - name: _airbyte_raw_id
+            description: "Airbyte raw record ID"
+            tests:
+              - not_null
+          - name: _airbyte_extracted_at
+            description: "Airbyte extraction timestamp"
+            tests:
+              - not_null
+          - name: _airbyte_generation_id
+            description: "Airbyte generation ID"
+          - name: _airbyte_meta
+            description: "Airbyte metadata JSON that includes sync id and changes"
+            tests:
+              - not_null
+
+      - name: raw_messages
+        description: "Raw messages table from Rasayel"
+        columns:
+          - name: id
+            description: "Primary key of the message"
+            tests:
+              - not_null
+              - unique
+          - name: body
+            description: "Message body content"
+          - name: user
+            description: "JSON containing user info who sent the message"
+          - name: readAt
+            description: "Timestamp when message was read (numeric) in unix format"
+          - name: sentAt
+            description: "Timestamp when message was sent (numeric) in unix format"
+          - name: assignee
+            description: "JSON containing assignee info"
+          - name: assigner
+            description: "JSON containing assigner info"
+          - name: createdAt
+            description: "Creation timestamp (numeric) in unix format"
+          - name: direction
+            description: "Message direction (inbound/outbound)"
+          - name: updatedAt
+            description: "Last update timestamp (numeric) in unix format"
+          - name: __typename
+            description: "GraphQL typename"
+          - name: components
+            description: "JSON containing message components"
+          - name: deliveredAt
+            description: "Timestamp when message was delivered (numeric) in unix format"
+          - name: messageType
+            description: "Type of the message"
+          - name: conversationId
+            description: "Linked conversation ID"
+          - name: messageSubtype
+            description: "Subtype of the message"
+          - name: messageCategory
+            description: "Category of the message"
+          - name: _airbyte_raw_id
+            description: "Airbyte raw record ID"
+            tests:
+              - not_null
+          - name: _airbyte_extracted_at
+            description: "Airbyte extraction timestamp"
+            tests:
+              - not_null
+          - name: _airbyte_generation_id
+            description: "Airbyte generation ID"
+          - name: _airbyte_meta
+            description: "Airbyte metadata JSON that includes sync id and changes"
+            tests:
+              - not_null
+
+      - name: raw_teams
+        description: "Raw teams table from Rasayel"
+        columns:
+          - name: id
+            description: "Primary key of the team"
+            tests:
+              - not_null
+              - unique
+          - name: name
+            description: "Team name"
+          - name: default
+            description: "Indicates if this is the default team"
+          - name: createdAt
+            description: "Creation timestamp (numeric) in unix format"
+          - name: updatedAt
+            description: "Last update timestamp (numeric) in unix format"
+          - name: memberships
+            description: "JSON containing team memberships"
+          - name: _airbyte_raw_id
+            description: "Airbyte raw record ID"
+            tests:
+              - not_null
+          - name: _airbyte_extracted_at
+            description: "Airbyte extraction timestamp"
+            tests:
+              - not_null
+          - name: _airbyte_generation_id
+            description: "Airbyte generation ID"
+          - name: _airbyte_meta
+            description: "Airbyte metadata JSON that includes sync id and changes"
+            tests:
+              - not_null
