@@ -2,7 +2,7 @@
     materialized='table',
     post_hook="
         ALTER TABLE {{ this }} 
-        ADD PRIMARY KEY (id);
+        ADD PRIMARY KEY (app_user_id);
     "
 ) }}
 

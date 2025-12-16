@@ -6,11 +6,13 @@ with source as (
 )
 
 select
-    id,
-    body,
-    "user"::jsonb as user_json,   
+    id as message_id,
+    body as message_body,
+    caption,
+    "user"::jsonb as user_json,
+    attachments::jsonb as attachments_json,
     assignee,
-    assigner,
+    assigner,   
     to_timestamp("createdAt") as created_at,
     to_timestamp("sentAt") as sent_at,
     to_timestamp("deliveredAt") as delivered_at,

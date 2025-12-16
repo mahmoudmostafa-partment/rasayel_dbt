@@ -8,7 +8,7 @@ models:
   - name: int_contacts
     description: "Flattened, cleaned contacts"
     columns:
-      - name: id
+      - name: contact_id
         description: "Primary key of the contact"
         tests:
           - not_null
@@ -38,7 +38,7 @@ models:
           - not_null
           - relationships:
               to: ref('int_contacts')
-              field: id
+              field: contact_id
       - name: category
         description: "Identifier type"
         tests:
@@ -60,7 +60,7 @@ models:
           - not_null
           - relationships:
               to: ref('int_contacts')
-              field: id
+              field: contact_id
       - name: channel_id
         description: "Channel identifier"
         tests:
@@ -68,7 +68,7 @@ models:
           # point to stg_channels because int_channels does NOT exist
           - relationships:
               to: ref('stg_channels')
-              field: id
+              field: channel_id
 
   # ----------------------------
   # int_messages
@@ -76,7 +76,7 @@ models:
   - name: int_messages
     description: "Cleaned intermediate messages with flattened body, sender, assignee, assigner and metadata"
     columns:
-      - name: id
+      - name: message_id
         description: "Primary key of the message"
         tests:
           - not_null
@@ -107,7 +107,10 @@ models:
 
       - name: updated_at
         description: "Message last updated timestamp"
-
+      - name: attachment_url
+        description: "URL of the first attachment if exists"
+      - name: caption
+        description: "Caption of the attachment if exists"
       - name: read_at
         description: "Timestamp when message was read"
 
@@ -132,7 +135,7 @@ models:
         tests:
           - relationships:
               to: ref('stg_conversations')
-              field: id
+              field: conversation_id
 
       - name: message_type
         description: "Message category from raw field (messageType)"
@@ -154,7 +157,7 @@ models:
           - not_null
           - relationships:
               to: ref('stg_teams')
-              field: id
+              field: team_id
       - name: app_user_id
         description: "FK → stg_appUsers.id"
         tests:

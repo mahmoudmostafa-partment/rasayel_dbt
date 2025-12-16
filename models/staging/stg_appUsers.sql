@@ -6,7 +6,7 @@ with source as (
 )
 
 select
-    id,
+    id as app_user_id,
     role,
     email,
     status,

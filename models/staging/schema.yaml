@@ -4,7 +4,7 @@ models:
   - name: stg_appUsers
     description: "Staging table for app users, cleaned and normalized from raw_appUsers"
     columns:
-      - name: id
+      - name: app_user_id
         description: "Primary key of the user"
         tests:
           - not_null
@@ -33,7 +33,7 @@ models:
   - name: stg_botUsers
     description: "Staging table for bot users, cleaned and normalized from raw_botUsers"
     columns:
-      - name: id
+      - name: bot_user_id
         description: "Primary key of the bot user"
         tests:
           - not_null
@@ -52,7 +52,7 @@ models:
   - name: stg_channelUsers
     description: "Staging table for contacts/customers from raw_channelUsers"
     columns:
-      - name: id
+      - name: contact_id
         description: "Primary key of the contact"
         tests:
           - not_null
@@ -77,7 +77,7 @@ models:
   - name: stg_channels
     description: "Staging table for channels from raw_channels"
     columns:
-      - name: id
+      - name: channel_id
         description: "Primary key of the channel"
         tests:
           - not_null
@@ -96,7 +96,7 @@ models:
   - name: stg_conversations
     description: "Staging table for conversations from raw_conversations"
     columns:
-      - name: id
+      - name: conversation_id
         description: "Primary key of the conversation"
         tests:
           - not_null
@@ -128,12 +128,12 @@ models:
   - name: stg_messages
     description: "Staging table for messages from raw_messages"
     columns:
-      - name: id
+      - name: message_id
         description: "Primary key of the message"
         tests:
           - not_null
           - unique
-      - name: body
+      - name: message_body
         description: "Message content"
       - name: user
         description: "JSON containing user info"
@@ -145,6 +145,10 @@ models:
         description: "JSON containing assignee info"
       - name: assigner
         description: "JSON containing assigner info"
+      - name: attachments_json
+        description: "JSON array of message attachments"
+      - name: captions
+        description: "attachment caption"
       - name: created_at
         description: "Creation timestamp"
         tests:
@@ -170,12 +174,12 @@ models:
   - name: stg_teams
     description: "Staging table for teams from raw_teams"
     columns:
-      - name: id
+      - name: team_id
         description: "Primary key of the team"
         tests:
           - not_null
           - unique
-      - name: name
+      - name: team_name
         description: "Name of the team"
         tests:
           - not_null

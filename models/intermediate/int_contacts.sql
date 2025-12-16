@@ -1,7 +1,7 @@
 -- models/intermediate/int_contacts.sql
 
 select
-    id,
+    contact_id,
     name,
     blocked,
     created_at,

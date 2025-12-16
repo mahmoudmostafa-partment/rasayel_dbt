@@ -2,7 +2,7 @@
 
 with base as (
     select
-        id as contact_id,
+        contact_id,
         channels
     from {{ ref('stg_channelUsers') }}
 ),
@@ -13,7 +13,7 @@ flattened as (
         (elem->>'id')::numeric as channel_id
     from base,
          jsonb_array_elements(channels) as elem
-    where (elem->>'id')::numeric in (select id from {{ ref('stg_channels') }})
+    where (elem->>'id')::numeric in (select channel_id from {{ ref('stg_channels') }})
 )
 
 select

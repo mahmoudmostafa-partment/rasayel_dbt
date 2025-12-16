@@ -4,7 +4,7 @@
     post_hook="
         ALTER TABLE {{ this }} 
         ADD CONSTRAINT fk_contact
-        FOREIGN KEY (contact_id) REFERENCES {{ ref('contacts') }}(id)
+        FOREIGN KEY (contact_id) REFERENCES {{ ref('contacts') }}(contact_id)
         ON DELETE CASCADE;
     "
 ) }}

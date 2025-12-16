@@ -4,12 +4,12 @@
     post_hook="
         ALTER TABLE {{ this }} 
         ADD CONSTRAINT fk_contact
-        FOREIGN KEY (contact_id) REFERENCES {{ ref('contacts') }}(id)
+        FOREIGN KEY (contact_id) REFERENCES {{ ref('contacts') }}(contact_id)
         ON DELETE CASCADE;
 
         ALTER TABLE {{ this }}
         ADD CONSTRAINT fk_channel
-        FOREIGN KEY (channel_id) REFERENCES {{ ref('channels') }}(id)
+        FOREIGN KEY (channel_id) REFERENCES {{ ref('channels') }}(channel_id)
         ON DELETE CASCADE;
     "
 ) }}

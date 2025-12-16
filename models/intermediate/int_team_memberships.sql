@@ -6,9 +6,9 @@ with source as (
 flattened as (
     select
         (member->>'id')::numeric as membership_id,
-        id::numeric as team_id,
+        team_id:: numeric,
         (member->'appUser'->>'id')::numeric as app_user_id,
-        (member->>'primary')::boolean as primary
+        (member->>'primary')::boolean as is_primary
     from source,
          jsonb_array_elements(memberships) as member
 )

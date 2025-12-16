@@ -6,9 +6,9 @@ with source as (
 )
 
 select
-    id,
-    "name",
-    "default",
+    id as team_id,
+    "name" as team_name,
+    "default" as is_default,
     to_timestamp("createdAt") as created_at,
     to_timestamp("updatedAt") as updated_at,
     memberships

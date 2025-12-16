@@ -4,7 +4,7 @@ models:
   - name: contacts
     description: "Final table of contacts/customers"
     columns:
-      - name: id
+      - name: contact_id
         description: "Primary key of the contact"
         tests:
           - not_null
@@ -31,7 +31,7 @@ models:
           - not_null
           - relationships:
               to: ref('contacts')
-              field: id
+              field: contact_id
       - name: category
         description: "Identifier category (PHONE, EMAIL, FACEBOOK_ID, etc.)"
         tests:
@@ -50,19 +50,19 @@ models:
           - not_null
           - relationships:
               to: ref('contacts')
-              field: id
+              field: contact_id
       - name: channel_id
         description: "Linked channel ID"
         tests:
           - not_null
           - relationships:
               to: ref('channels')
-              field: id
+              field: channel_id
 
   - name: messages
     description: "Final messages table"
     columns:
-      - name: id
+      - name: message_id
         description: "Message ID"
         tests:
           - not_null
@@ -71,6 +71,10 @@ models:
         description: "Unified message body text"
         tests:
           - not_null
+      - name: attachment_url
+        description: "URL of the first attachment if exists"
+      - name: caption
+        description: "Caption of the attachment if exists"
       - name: sender_user_id
         description: "ID of sender user"
         tests:
@@ -82,7 +86,7 @@ models:
         tests:
           - relationships:
               to: ref('appUsers')
-              field: id
+              field: app_user_id
       - name: assigner_id
         description: "ID of assigner user"
       - name: assigner_type
@@ -111,7 +115,7 @@ models:
         tests:
           - relationships:
               to: ref('conversations')
-              field: id
+              field: conversation_id
       - name: message_type
         description: "Original messageType"
       - name: message_subtype
@@ -122,7 +126,7 @@ models:
   - name: channels
     description: "Final channels table"
     columns:
-      - name: id
+      - name: channel_id
         description: "Primary key of channel"
         tests:
           - not_null
@@ -139,7 +143,7 @@ models:
   - name: appUsers
     description: "Final appUsers table"
     columns:
-      - name: id
+      - name: app_user_id
         description: "Primary key of user"
         tests:
           - not_null
@@ -162,7 +166,7 @@ models:
   - name: botUsers
     description: "Final bot users table"
     columns:
-      - name: id
+      - name: bot_user_id
         description: "Primary key of bot user"
         tests:
           - not_null
@@ -177,12 +181,12 @@ models:
   - name: teams
     description: "Final teams table"
     columns:
-      - name: id
+      - name: team_id
         description: "Primary key of team"
         tests:
           - not_null
           - unique
-      - name: name
+      - name: team_name
         description: "Team name"
         tests:
           - not_null
@@ -207,13 +211,13 @@ models:
           - not_null
           - relationships:
               to: ref('teams')
-              field: id
+              field: team_id
       - name: app_user_id
         description: "Foreign key to appUsers.id"
         tests:
           - not_null
           - relationships:
               to: ref('appUsers')
-              field: id
-      - name: primary
+              field: app_user_id
+      - name: is_primary
         description: "Indicates primary membership"

@@ -6,7 +6,7 @@ with source as (
 )
 
 select
-    id,
+    id as contact_id,
     coalesce(
     nullif("name", ''),
     nullif("displayName", ''),

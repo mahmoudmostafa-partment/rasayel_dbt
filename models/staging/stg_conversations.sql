@@ -6,7 +6,7 @@ with source as (
 )
 
 select
-    id,
+    id as conversation_id,
     state,
     "channelId"::numeric as channel_id,
     "contactId"::numeric as contact_id,

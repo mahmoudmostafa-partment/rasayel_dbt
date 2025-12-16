@@ -2,7 +2,7 @@
 
 with base as (
     select
-        id as contact_id,
+        contact_id,
         identifiers
     from {{ ref('stg_channelUsers') }}
 ),

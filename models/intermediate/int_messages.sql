@@ -7,11 +7,11 @@ with source as (
 
 flattened as (
     select
-        id,
+        message_id,
         
         -- unify message body: prefer body, otherwise concatenate components text
         coalesce(
-            nullif(body, ''),   -- use body if not empty
+            nullif(message_body, ''),   -- use body if not empty
             array_to_string(
                 array(
                     select elem->>'text'
@@ -20,7 +20,8 @@ flattened as (
                 E'\n'           -- newline separator
             )
         ) as message_body,
-        
+        caption,
+        attachments_json -> 0 ->> 'url' as attachment_url,
         -- flatten sender (user) JSON
         user_json->>'id' as sender_user_id,
         user_json->>'__typename' as sender_user_type,

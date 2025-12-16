@@ -6,7 +6,7 @@ with source as (
 )
 
 select
-    id,
+    id as channel_id,
     to_timestamp("createdAt") as created_at,
     to_timestamp("updatedAt") as updated_at,
     "channelType" as channel_type,

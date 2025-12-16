@@ -6,7 +6,7 @@ with source as (
 )
 
 select
-    id,
+    id as bot_user_id,
     "displayName" as display_name,
     to_timestamp("createdAt") as created_at,
     to_timestamp("updatedAt") as updated_at
